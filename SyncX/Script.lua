@@ -130,8 +130,8 @@ end})
 
 T5:AddDropdown({
 Name = "Select Rocks",
-Default = Rocks[1],
-Options = Rocks,
+Default = tbl_Rocks[1],
+Options = tbl_Rocks,
 Callback = function(object)
 	Settings.Rocks = object
 end})
@@ -146,7 +146,7 @@ while wait() do
     if Settings.WorkOut1 == false then break end
     pcall(function()
             game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame =
-                game:GetService("Workspace").machinesFolder[Rocks].Rock.CFrame
+                game:GetService("Workspace").machinesFolder[tbl_Rocks].Rock.CFrame
             game:GetService("Players").LocalPlayer.muscleEvent:FireServer("punch", "leftHand")
 
             game:GetService("Players").LocalPlayer.muscleEvent:FireServer("punch", "rightHand")
