@@ -1,4 +1,5 @@
 local OrionLib = loadstring(game:HttpGet("https://pastebin.com/raw/NMEHkVTb"))()
+local itemNumber = math.huge
 
 local jk = {}
 for _, v in pairs(game:GetService("ReplicatedStorage").chestRewards:GetDescendants()) do
@@ -37,13 +38,23 @@ function c()
 end
 
 local Window = OrionLib:MakeWindow({Name = "VIP Turtle Hub V3", HidePremium = false, SaveConfig = false, ConfigFolder = "TurtleFi"})
-    
-local T1 = Window:MakeTab({Name = "Main",Icon = "rbxassetid://",PremiumOnly = false})
 
+local function children(s,get)
+for _,v in pairs(s:GetChildren()) do
+	get(v)
+end
+end
+
+local function setValue(item,index)
+	item.Value = index
+end
+
+local T1 = Window:MakeTab({Name = "Main",Icon = "rbxassetid://",PremiumOnly = false})
 local T2 = Window:MakeTab({Name = "Crystal",Icon = "rbxassetid://",PremiumOnly = false})
 local T5 = Window:MakeTab({Name = "Rocks",Icon = "rbxassetid://",PremiumOnly = false})
 local T6 = Window:MakeTab({Name = "Brawl",Icon = "rbxassetid://",PremiumOnly = false})
 local T7 = Window:MakeTab({Name = "Chest",Icon = "rbxassetid://",PremiumOnly = false})
+--local T8 = Window:MakeTab({Name = "Tool",Icon = "rbxassetid://",PremiumOnly = false})
 local T3 = Window:MakeTab({Name = "ESP",Icon = "rbxassetid://",PremiumOnly = false})
 local T4 = Window:MakeTab({Name = "Misc",Icon = "rbxassetid://",PremiumOnly = false})
 
@@ -51,11 +62,11 @@ local Settings = {
 	WorkOut = false,
 	AutoMob = false,
 	WorkOut1 = false,
-	Rocks = false,
+	Rocks = "",
 	personal = false,
 	Rebirth = false,
 	Hot = false,
-	Crystals = false,
+	Crystals = "",
         AutoPets = false,
         Stop = false,
         Stop1 = false,
@@ -77,7 +88,7 @@ while wait() do
     if Settings.WorkOut == false then break end
     game:GetService("Players").LocalPlayer.muscleEvent:FireServer("rep")
     c()
-    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(9e9,9e9,9e9)
+    --game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(9e9,9e9,9e9)
         if not Settings.WorkOut then
          game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(0, 0, 0)
         end
@@ -146,7 +157,7 @@ while wait() do
     if Settings.WorkOut1 == false then break end
     pcall(function()
             game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame =
-                game:GetService("Workspace").machinesFolder[tbl_Rocks].Rock.CFrame
+                game:GetService("Workspace").machinesFolder[Settings.Rocks].Rock.CFrame
             game:GetService("Players").LocalPlayer.muscleEvent:FireServer("punch", "leftHand")
 
             game:GetService("Players").LocalPlayer.muscleEvent:FireServer("punch", "rightHand")
@@ -221,7 +232,7 @@ end
 end)
 end})
 
-T6:AddSlider({
+T7:AddSlider({
 Name = "Timer",
 Min = 0,
 Max = 20,
@@ -258,7 +269,7 @@ Settings.AutoPets = State
 spawn(function()
 while wait() do
     if Settings.AutoPets == false then break end
-    game:GetService("ReplicatedStorage").rEvents.openCrystalRemote:InvokeServer("openCrystal", jk1)
+    game:GetService("ReplicatedStorage").rEvents.openCrystalRemote:InvokeServer("openCrystal",Settings.Crystals)
 end
 end)
 end})
@@ -446,6 +457,20 @@ if Settings.WorkOut then
 if Settings.WorkOut1 then
         game.Players.LocalPlayer.Character.Humanoid:ChangeState(11)
    end
+end)
+
+children(game.Players.LocalPlayer.Backpack,function(i)
+	children(i,function(l)
+		if l:FindFirstChild("attackTime") then
+			setValue(i.attackTime,0)
+		elseif l:FindFirstChild("strengthGain") then
+			setValue(i.strengthGain,itemNumber)
+		elseif l:FindFirstChild("agilityGain") then
+			setValue(i.agilityGain,itemNumber)
+		elseif l:FindFirstChild("durabilityGain") then
+			setValue(i.durabilityGain,itemNumber)
+		end
+end)
 end)
 
 for i,v in pairs(game:GetService("ReplicatedStorage").funs:GetChildren()) do
