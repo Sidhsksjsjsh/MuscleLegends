@@ -17,7 +17,7 @@ end
 local tbl_Rocks = {}
 for i, v in pairs(game:GetService("Workspace").machinesFolder:GetChildren()) do
     if v:FindFirstChild("Rock") then
-        table.insert(Rocks, v.Name)
+        table.insert(tbl_Rocks, v.Name)
     end
 end
 
